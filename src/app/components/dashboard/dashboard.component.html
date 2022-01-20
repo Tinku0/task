@@ -1,0 +1,140 @@
+<section class="page-wrapper">
+
+    <div class="container-fluid">
+        <button class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Create Dashboard</button>
+    </div>
+
+    <div class="container-fluid">
+
+        <div class="row justify-content-center">
+
+            <div class="col-6">
+
+                <div class="card bg-light shadow-sm p-2 m-2" *ngIf="np">
+                    <div class="d-flex">
+                        <div class="mx-2"><b>Total Products</b></div>
+                        <div class="pull-right ml-auto mr-3"><b>{{ products?.length }}</b></div>
+                    </div>
+                </div>
+
+                <div class="card bg-light shadow-sm p-2 m-2" *ngIf="latestp">
+                    <small><b>LATEST PRODUCT</b></small>
+                    <div class="d-flex row">
+                        <div class="col-1">
+                            <img [src]="latestprod?.image" width="40" height="40" alt="">
+                        </div>
+                        <div class="col-11">
+                            <div class="row">
+                                <div class="col-10"> <small><b>{{ latestprod?.title }} ( {{latestprod?.category}}
+                                            )</b></small> </div>
+                                <div class="col-2">{{ latestprod?.price }}</div>
+                            </div>
+                            <div class="row">
+                                <span class="desc-text col-10"> <small>{{ latestprod?.description | slice:0:50 }}
+                                        ...</small> </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <section *ngIf="lp">
+                    <h4>Products</h4>
+
+                <div class="card bg-light shadow-sm p-2 m-2" style="height: 60px;" *ngFor="let product of products">
+                    <div class="d-flex row">
+                        <div class="col-1">
+                            <img [src]="product?.image" width="40" height="40" alt="">
+                        </div>
+                        <div class="col-11">
+                            <div class="row">
+                                <div class="col-10"> <small><b>{{ product?.title }} ( {{product.category}} )</b></small>
+                                </div>
+                                <div class="col-2">{{ product.price }}</div>
+                            </div>
+                            <div class="row">
+                                <span class="desc-text col-10"> <small>{{ product.description | slice:0:50 }}
+                                        ...</small> </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </section>
+
+            </div>
+
+            <div class="col-6">
+
+                <section *ngIf="lu">
+                    <h4>Users</h4>
+
+                <div class="card bg-light shadow-sm p-2 m-2" *ngFor="let user of users">
+                    <div class="d-flex">
+                        <div class="col-2">{{ user.username }}</div>
+                        <div class="col-4">{{ user.email }}</div>
+                        <div class="col-3">{{ user.phone }}</div>
+                        <div class="col-3">{{ user.address.city }}</div>
+                    </div>
+                </div>
+                </section>
+
+                <section *ngIf="pc">
+                    <h5>Product Categories</h5>
+
+                <div class="card bg-light shadow-sm p-2 m-2" *ngFor="let cat of prodCat">
+                    <div class="d-flex">
+                        <div class="col">{{ cat }}</div>
+                    </div>
+                </div>
+                </section>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add Dashboard</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h5>Select to add</h5>
+                <input type="text" class="form-group" placeholder="Title" [(ngModel)]="name">
+                <form [formGroup]='comForm' (ngSubmit)="check()">
+                    <div class="form-check">
+                        <input class="form-check-input" formControlName="np" type="checkbox">
+                        <label class="form-check-label">Number of products</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" formControlName="lp" type="checkbox">
+                        <label class="form-check-label">List of products</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" formControlName="latestp" type="checkbox">
+                        <label class="form-check-label">Latest product</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" formControlName="pc" type="checkbox">
+                        <label class="form-check-label">product categories</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" formControlName="lu" type="checkbox">
+                        <label class="form-check-label">List of users</label>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" #closeModal>Close</button>
+            </div>
+        </div>
+    </div>
+</div>
